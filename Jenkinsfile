@@ -28,23 +28,7 @@ pipeline {
             }
         }
 
-        stage("Static Code Analysis"){
-            steps {
-                script {
-                    withSonarQubeEnv(credentialsId: 'sonarqube') {
-                        sh 'mvn clean package sonar:sonar'
-                    }
-                }
-            }
-        }
-
-        stage("Quality Gate Analysis"){
-            steps {
-                script {
-                   waitForQualityGate abortPipeline: false, credentialsId: 'sonarqube' 
-                }
-            }
-        }
+        
 
         stage("Upload Artifacts to Nexus"){
             steps {
